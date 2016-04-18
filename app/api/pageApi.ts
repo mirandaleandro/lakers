@@ -1,15 +1,13 @@
 /// <reference path='../_all.ts' />
 module lakers {
 
-    export class PageApiService {
+    export class ProjectApiService {
 
         private requestTemplate = {
             method: 'POST',
-            url: 'http://localhost:9000/add/project',
+            url: '/proxy/localhost:9000/add/project',
             headers: {
                 'Content-Type': "application/json",
-                'Access-Control-Allow-Origin': '*',
-                "Access-Control-Expose-Headers" : "*"
             },
             data: null
         };
@@ -37,7 +35,17 @@ module lakers {
         public postHarPage(harPageModel){
             return this.$http(this.getPostHarRequestConfig(harPageModel));
         }
+
+
+        public getProjectWithId(projectId:string){
+            return this.$http(
+                {
+                    method: 'GET',
+                    url:'/proxy/localhost:9000/get/project/'+projectId
+                }
+            )
+        }
     }
 
-    app.service("pageApiService",PageApiService);
+    app.service("projectApiService",ProjectApiService);
 }

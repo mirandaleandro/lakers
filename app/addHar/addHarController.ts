@@ -11,15 +11,16 @@ module lakers {
             harJson: ''
         };
 
-        static $inject = ['pageApiService'];
-        //
-        constructor(private pageApi:any) {
+        static $inject = ['$state', 'projectApiService'];
+
+        constructor(private $state:any, private projectApi:IProjectApi) {
         }
 
         public submitAddPageForm() {
-            this.pageApi.postHarPage(this.harPageModel)
-                .then((pages)=> {
+            this.projectApi.postHarPage(this.harPageModel)
+                .then((response)=> {
                     debugger;
+                    this.$state.go('viewProject',{projectId: response.data.id})
                 })
                 .catch((error)=> {
                     debugger;
