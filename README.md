@@ -4,7 +4,7 @@ AngularJS + Typescript + Gulp Seed
 
 This project is an application skeleton for an **AngularJS** and **Typescript** web app.
 
-The seed contains a sample [TodoMVC](https://github.com/tastejs/todomvc/tree/gh-pages/examples/typescript-angular) application, it uses Typescript and its internal module concept, it is preconfigured to install the AngularJS framework and a bunch of development and testing tools.
+The seed contains a sample [lakers](https://github.com/tastejs/todomvc/tree/gh-pages/examples/typescript-angular) application, it uses Typescript and its internal module concept, it is preconfigured to install the AngularJS framework and a bunch of development and testing tools.
 
 ----------
 

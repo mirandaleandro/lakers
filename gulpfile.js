@@ -8,6 +8,7 @@ var del = require('del');
 var runSequence = require('run-sequence');
 var eventStream = require('event-stream');
 var mainBowerFiles = require('main-bower-files');
+var concat = require('gulp-concat');
 
 gulp.task('styles', function () {
 	return gulp.src('content/styles/main.css')
@@ -155,14 +156,14 @@ gulp.task('default', ['clean'], function () {
 gulp.task('connect', function () {
 	$.connect.server({
 		root: ['app', __dirname],
-		port: 9000,
+		port: 9001,
 		livereload: true
 	});
 });
 
 gulp.task('serve', ['scripts:app'], function () {
 	runSequence('connect', function () {
-		require('opn')('http://localhost:9000');
+		require('opn')('http://localhost:9001');
 	});
 });
 
@@ -177,14 +178,14 @@ gulp.task('wiredep', function () {
 		.pipe(gulp.dest('app'));
 });
 
-gulp.task('watch', ['serve', 'test:ci'], function () {
+gulp.task('watch', ['serve'], function () {
 	$.watch([
-		'app/*.html',
+		'app/**/*.html',
 		'app/**/*.ts',
 		'content/styles/**/*.css',
 		'content/images/**/*'
 	]).pipe($.connect.reload());
 
-	gulp.watch(['app/**/*.ts', 'test/**/*.ts'], ['test:ci']);
+	gulp.watch(['app/**/*.ts']);
 	gulp.watch('bower.json', ['wiredep']);
 });

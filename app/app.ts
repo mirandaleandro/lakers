@@ -1,14 +1,25 @@
 ﻿/// <reference path='_all.ts' />
 /**
-* The main TodoMVC app module.
+* The main lakers app module.
 *
 * @type {angular.Module}
 */
-module app {
-    'use strict';
-    var todomvc = angular.module('todomvc', [])
-        .controller('todoCtrl', todos.TodoCtrl)
-        .directive('todoBlur', todos.todoBlur)
-        .directive('todoFocus', todos.todoFocus)
-        .service('todoStorage', todos.TodoStorage);
-} 
+module lakers {
+    export var app = angular.module('lakers', ['ui.router','lkAddHar']);
+
+    app.config(function($stateProvider, $urlRouterProvider) {
+        // Now set up the states
+        $stateProvider
+            .state('home', {
+                url: "/",
+                templateUrl: "home/homeTemplate.html"
+            })
+            .state('addPages', {
+                url: "/add/pages",
+                template: "<lk-add-har></lk-add-page>"
+            })
+
+
+        $urlRouterProvider.otherwise("/");
+    });
+}
