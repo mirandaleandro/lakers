@@ -1,14 +1,10 @@
 /// <reference path='../_all.ts' />
 
 
-module addHar {
+module lakers {
     'use strict';
 
-
     export class AddHarController {
-        //public projectName:string = '';
-        //public workNote:string = '';
-        //public harJson:string = '';
         public harPageModel = {
             projectName: '',
             workNotes: '',
@@ -17,14 +13,22 @@ module addHar {
 
         static $inject = ['pageApiService'];
         //
-        constructor(private pageApi:any){
-           debugger;
+        constructor(private pageApi:any) {
         }
 
         public submitAddPageForm() {
-            debugger;
-            this.pageApi.postHarPage(this.harPageModel);
+            this.pageApi.postHarPage(this.harPageModel)
+                .then((pages)=> {
+                    debugger;
+                })
+                .catch((error)=> {
+                    debugger;
+
+                });
         }
 
     }
+
+    app.controller("addHarController", AddHarController);
+
 }

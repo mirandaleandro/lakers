@@ -1,13 +1,13 @@
 /// <reference path='../_all.ts' />
 
-module addHar {
+module lakers {
 
     'use strict';
 
-    export function addHarDirective():ng.IDirective {
+    function addHarDirective():ng.IDirective {
         return {
             scope:{},
-            controller: addHar.AddHarController,
+            controller: AddHarController,
             controllerAs: 'ctrl',
             bindToController: true,
             templateUrl: 'addHar/addHarTemplate.html',
@@ -16,4 +16,7 @@ module addHar {
             }
         };
     }
+
+    app.directive("lkAddHar", addHarDirective);
+
 }

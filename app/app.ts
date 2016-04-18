@@ -5,7 +5,7 @@
 * @type {angular.Module}
 */
 module lakers {
-    export var app = angular.module('lakers', ['ui.router','lkAddHar']);
+    export var app = angular.module('lakers', ['ui.router']);
 
     app.config(function($stateProvider, $urlRouterProvider) {
         // Now set up the states
