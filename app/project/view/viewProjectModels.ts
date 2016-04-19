@@ -61,7 +61,9 @@ module lakers {
     }
 
     export interface IProjectService {
-        updateCurrentProject(projectId:string):void;
+        currentProject:IProject
+        getFastestEntries(page:IPage, top:number):Array<IEntry>
+        getSlowestEntries(page:IPage, top:number):Array<IEntry>
     }
 
     export interface IProjectApi {

@@ -1,7 +1,7 @@
 /// <reference path='../_all.ts' />
 module lakers {
 
-    export class ProjectService {
+    export class ProjectService implements IProjectService {
 
         public currentProject:IProject;
 
@@ -10,15 +10,20 @@ module lakers {
         constructor(private projectApi:IProjectApi) {
         }
 
-        public updateCurrentProject(projectId:string):void {
-            this.projectApi.getProjectWithId(projectId)
-                .then((response) => {
-                    debugger;
-                    this.currentProject = response.data;
-                })
-                .catch((error) => {
-                    console.log(error);
-                })
+        public getFastestEntries(page:IPage, top:number = 5) {
+            return page.entries.sort(this.sortFastestEntries).slice(0, top)
+        }
+
+        public getSlowestEntries(page:IPage, top:number = 5) {
+            return page.entries.sort(this.sortSlowestEntries).slice(0, top)
+        }
+
+        private sortFastestEntries(el1:IEntry, el2:IEntry) {
+            return el1.time - el2.time
+        }
+
+        private sortSlowestEntries(el1:IEntry, el2:IEntry) {
+            return el2.time - el1.time
         }
     }
 

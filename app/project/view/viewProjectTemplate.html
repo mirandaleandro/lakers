@@ -1,3 +1,30 @@
-<div class="container" >
-        <h1> Hello world </h1>
+<div class="container">
+
+    <h1 class="page-header">{{ctrl.project.name}}</h1>
+
+    <p ng-if="ctrl.project.workNotes" class="lead">{{ctrl.project.workNotes}}</p>
+
+
+    <div ng-repeat="page in ctrl.project.pages">
+        <h2>{{page.pageId}}</h2>
+
+        <p>Load time: <b>{{page.onContentLoad | number:2}}ms</b></p>
+
+        <div class="row">
+            <div class="col-lg-6">
+                <h3>Fastest resources to load</h3>
+                <nvd3 options="ctrl.multiBarHorizontalChartConfiguration"
+                      data="ctrl.fastestToLoad[$index].data"></nvd3>
+            </div>
+
+            <div class="col-lg-6">
+                <h3>Slowest resources to load</h3>
+                <nvd3 options="ctrl.multiBarHorizontalChartConfiguration"
+                      data="ctrl.slowestToLoad[$index].data"></nvd3>
+            </div>
+        </div>
+
+
+    </div>
+
 </div>

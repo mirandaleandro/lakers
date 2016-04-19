@@ -12,9 +12,9 @@ module lakers {
             data: null
         };
 
-        static $inject = ["$q", "$http"];
+        static $inject = ['$http'];
 
-        constructor(private $q: ng.$q, private $http:ng.$http) {
+        constructor(private $http:any) {
         }
 
         private getPostHarRequestConfig(harPageModel:IHarPage){
