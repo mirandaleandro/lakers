@@ -38,14 +38,17 @@ module lakers {
         static $inject = ['$scope', '$stateParams', 'projectService'];
 
         constructor(private $scope, private $stateParams:any, private projectService:IProjectService) {
-            debugger;
             this.project = this.projectService.currentProject;
+            this.generateCharts();
+        }
+
+        public generateCharts(){
             this.generateFastestCallsCharts();
+            this.generateSlowestCallsCharts();
         }
 
         public generateFastestCallsCharts() {
-
-            this.project.pages.forEach((page, pageIndex) =>{
+            this.project.pages.forEach((page) =>{
                 var fastestEntriesPerPage = this.projectService.getFastestEntries(page, 5);
 
                 var data =  [{
@@ -61,7 +64,22 @@ module lakers {
             });
         }
 
+        public generateSlowestCallsCharts() {
+            this.project.pages.forEach((page) =>{
+                var slowestEntriesPerPage = this.projectService.getSlowestEntries(page, 5);
 
+                var data =  [{
+                    "key": "Slowest resources to load",
+                    "color": "#1f77b4",
+                    "values": slowestEntriesPerPage.map(this.getLabelValueForEntry)
+                }];
+
+                this.slowestToLoad.push({
+                    options: this.multiBarHorizontalChartConfiguration,
+                    data: data
+                })
+            });
+        }
 
         private getLabelValueForEntry(entry:IEntry){
             return {

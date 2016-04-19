@@ -5,7 +5,7 @@ module lakers {
 
         private requestTemplate = {
             method: 'POST',
-            url: '/proxy/localhost:9000/add/project',
+            url: 'http://localhost:9000/add/project',
             headers: {
                 'Content-Type': "application/json",
             },
