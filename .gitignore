@@ -9,3 +9,9 @@ dist
 bower_components
 
 theme/
+
+app/**/*.js
+
+app/**/*.map
+
+.idea
