@@ -7,8 +7,7 @@ module lakers {
             method: 'POST',
             url: 'http://localhost:9000/add/project',
             headers: {
-                'Content-Type': "application/json",
-                'Access-Control-Allow-Origin': '*'
+                'Content-Type': "application/json"
             },
             data: null
         };
