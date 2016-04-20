@@ -7,8 +7,7 @@ module lakers {
             method: 'POST',
             url: 'http://localhost:9000/add/project',
             headers: {
-                'Content-Type': "application/json",
-                'Access-Control-Allow-Origin': '*'
+                'Content-Type': "application/json"
             },
             data: null
         };
@@ -42,7 +41,7 @@ module lakers {
             return this.$http(
                 {
                     method: 'GET',
-                    url:'/proxy/localhost:9000/get/project/'+projectId
+                    url:'http://localhost:9000/get/project/'+projectId
                 }
             )
         }
