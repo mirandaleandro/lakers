@@ -22,6 +22,18 @@
                 <nvd3 options="ctrl.multiBarHorizontalChartConfiguration"
                       data="ctrl.slowestToLoad[$index].data"></nvd3>
             </div>
+
+            <div class="col-lg-6">
+                <h3>Total types of resources loaded</h3>
+                <nvd3 options="ctrl.pieCharConfiguration"
+                      data="ctrl.typesOfResourcesLoaded[$index]"></nvd3>
+            </div>
+
+            <div class="col-lg-6">
+                <h3>% types of resources loaded</h3>
+                <nvd3 options="ctrl.pieCharConfiguration"
+                      data="ctrl.percentageOfResourcesLoaded[$index]"></nvd3>
+            </div>
         </div>
 
     </div>

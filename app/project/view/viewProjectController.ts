@@ -9,6 +9,8 @@ module lakers {
         public project:IProject;
         public fastestToLoad = [];
         public slowestToLoad = [];
+        public typesOfResourcesLoaded = [];
+        public percentageOfResourcesLoaded = [];
 
         public multiBarHorizontalChartConfiguration = {
             chart: {
@@ -35,6 +37,27 @@ module lakers {
             }
         };
 
+        public pieCharConfiguration = {
+            chart: {
+                type: 'pieChart',
+                height: 500,
+                x: function(d){return d.key;},
+                y: function(d){return d.y;},
+                showLabels: true,
+                duration: 500,
+                labelThreshold: 0.01,
+                labelSunbeamLayout: true,
+                legend: {
+                    margin: {
+                        top: 5,
+                        right: 35,
+                        bottom: 5,
+                        left: 0
+                    }
+                }
+            }
+        };
+
         static $inject = ['$scope', '$stateParams', 'projectService'];
 
         constructor(private $scope, private $stateParams:any, private projectService:IProjectService) {
@@ -45,6 +68,8 @@ module lakers {
         public generateCharts(){
             this.generateFastestCallsCharts();
             this.generateSlowestCallsCharts();
+            this.generateResourceTypeCharts();
+            this.generateResourceTypePercentageCharts();
         }
 
         public generateFastestCallsCharts() {
@@ -79,6 +104,56 @@ module lakers {
                     data: data
                 })
             });
+        }
+
+        public generateResourceTypeCharts() {
+            this.project.pages.forEach((page:IPage) =>{
+                var mimeValues = this.countMimeType(page.entries);
+
+                this.typesOfResourcesLoaded.push(mimeValues);
+            });
+        }
+
+        public generateResourceTypePercentageCharts() {
+            this.project.pages.forEach((page:IPage) =>{
+                var mimeValues = this.countMimeType(page.entries);
+
+                mimeValues = this.mapMimeValuesToPercentage(mimeValues);
+
+                this.percentageOfResourcesLoaded.push(mimeValues);
+            });
+        }
+
+        public mapMimeValuesToPercentage(mimeValues){
+            var total = _.reduce(_.pluck(mimeValues,"y"), function(memo, num){ return memo + num; }, 0);
+
+            return mimeValues.map((value) =>{
+                value.y = value.y/total * 100;
+                return value;
+            });
+        }
+
+        public countMimeType(entries:Array<IEntry>){
+            var countMimeType = {};
+
+            entries.forEach((entry:IEntry) =>{
+                if(countMimeType[entry.response.mimeType]){
+                    countMimeType[entry.response.mimeType].y++
+                }
+                else{
+                    countMimeType[entry.response.mimeType] = {
+                        key:entry.response.mimeType,
+                        y:1
+                    }
+                }
+            });
+
+            var mimeValues = [];
+            for(var mimeKey in countMimeType){
+                mimeValues.push(countMimeType[mimeKey]);
+            }
+
+            return mimeValues;
         }
 
         private getLabelValueForEntry(entry:IEntry){
