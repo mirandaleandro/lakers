@@ -1,18 +1,26 @@
-<div class="container" >
-        <form role="form" ng-submit="ctrl.submitAddPageForm()" >
-            <div class="form-group" ng-click="ctrl.logClick()">
-                <label for="projectName">Project Name</label>
-                <input ng-model="ctrl.harPageModel.projectName" type="text" class="form-control" id="projectName" placeholder="e.g Mother's Cookbook" required>
-            </div>
-            <div class="form-group">
-                <label for="notes">Work Notes</label>
-                <textarea ng-model="ctrl.harPageModel.workNotes" id="notes" class="form-control" rows="3"></textarea>
-            </div>
-            <div class="form-group">
-                <label for="harJson">Har Json</label>
-                <textarea ng-model="ctrl.harPageModel.harJson" id="harJson" class="form-control" rows="10" required></textarea>
-                <p class="help-block">Please paste you har json in the box above.</p>
-            </div>
-            <button type="submit" class="btn btn-default">Submit</button>
-        </form>
+<div class="container">
+    <div class="alert alert-danger alert-dismissible" role="alert" ng-if="!ctrl.isSubmissionValid">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
+        </button>
+        <strong>Oh snap!</strong> Your har was rejected by our minions. Please check its format and try again!
+    </div>
+    <form role="form" ng-submit="ctrl.submitAddPageForm()">
+        <div class="form-group" ng-click="ctrl.logClick()">
+            <label for="projectName">Project Name</label>
+            <input ng-model="ctrl.harPageModel.projectName" type="text" class="form-control" id="projectName"
+                   placeholder="e.g Mother's Cookbook" required>
+        </div>
+        <div class="form-group">
+            <label for="notes">Work Notes</label>
+            <textarea ng-model="ctrl.harPageModel.workNotes" id="notes" class="form-control" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="harJson">Har Json</label>
+            <textarea ng-model="ctrl.harPageModel.harJson" id="harJson" class="form-control" rows="10"
+                      required></textarea>
+
+            <p class="help-block">Please paste you har json in the box above.</p>
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+    </form>
 </div>

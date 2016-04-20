@@ -11,6 +11,8 @@ module lakers {
         public slowestToLoad = [];
         public typesOfResourcesLoaded = [];
         public percentageOfResourcesLoaded = [];
+        public mostEfficientResourcesLoaded = [];
+        public mostInEfficientResourcesLoaded = [];
 
         public multiBarHorizontalChartConfiguration = {
             chart: {
@@ -36,7 +38,6 @@ module lakers {
                 }
             }
         };
-
         public pieCharConfiguration = {
             chart: {
                 type: 'pieChart',
@@ -57,6 +58,29 @@ module lakers {
                 }
             }
         };
+        public donutChartConfiguration = {
+            chart: {
+                type: 'pieChart',
+                height: 450,
+                donut: true,
+                x: function(d){return d.key;},
+                y: function(d){return d.y;},
+                showLabels: false,
+                 pie: {
+                     startAngle: function(d) { return d.startAngle/2 -Math.PI/2 },
+                     endAngle: function(d) { return d.endAngle/2 -Math.PI/2 }
+                 },
+                ion: 500,
+                legend: {
+                    margin: {
+                        top: 5,
+                        right: 70,
+                        bottom: 5,
+                        left: 0
+                    }
+                }
+            }
+        };
 
         static $inject = ['$scope', '$stateParams', 'projectService'];
 
@@ -70,6 +94,8 @@ module lakers {
             this.generateSlowestCallsCharts();
             this.generateResourceTypeCharts();
             this.generateResourceTypePercentageCharts();
+            this.generateMostEfficientCharts();
+            this.generateMostInEfficientCharts();
         }
 
         public generateFastestCallsCharts() {
@@ -121,6 +147,35 @@ module lakers {
                 mimeValues = this.mapMimeValuesToPercentage(mimeValues);
 
                 this.percentageOfResourcesLoaded.push(mimeValues);
+            });
+        }
+
+        public generateMostEfficientCharts(){
+            this.project.pages.forEach((page:IPage) =>{
+
+                var mostEfficientEntries = this.projectService.getMostEfficientEntries(page);
+                var efficiencyMap = this.getEntriesEfficiencyMap(mostEfficientEntries);
+
+                this.mostEfficientResourcesLoaded.push(efficiencyMap);
+            });
+        }
+
+        public generateMostInEfficientCharts(){
+            this.project.pages.forEach((page:IPage) =>{
+
+                var mostInEfficientEntries = this.projectService.getMostInEfficientEntries(page);
+                var efficiencyMap = this.getEntriesEfficiencyMap(mostInEfficientEntries);
+
+                this.mostInEfficientResourcesLoaded.push(efficiencyMap);
+            });
+        }
+
+        private getEntriesEfficiencyMap(entries:Array<IEntry>){
+            return entries.map((entry:IEntry) =>{
+                return {
+                    key: entry.request.url,
+                    y: this.projectService.getEntryEfficiency(entry)
+                }
             });
         }
 

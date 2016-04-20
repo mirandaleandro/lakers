@@ -5,6 +5,9 @@ module lakers {
     'use strict';
 
     export class AddHarController {
+
+        public isSubmissionValid = true;
+
         public harPageModel = {
             projectName: '',
             workNotes: '',
@@ -17,15 +20,22 @@ module lakers {
         }
 
         public submitAddPageForm() {
-            this.projectApi.postHarPage(this.harPageModel)
-                .then((response)=> {
-                    debugger;
-                    this.$state.go('viewProject',{projectId: response.data.id})
-                })
-                .catch((error)=> {
-                    debugger;
+            this.isSubmissionValid = true;
 
-                });
+            try {
+
+                this.projectApi.postHarPage(this.harPageModel)
+                    .then((response)=> {
+                        this.$state.go('viewProject', {projectId: response.data.id})
+                    })
+                    .catch((error)=> {
+                        console.log("error");
+                        this.isSubmissionValid = false;
+                    });
+            }catch(error){
+                console.log("error");
+                this.isSubmissionValid = false;
+            }
         }
 
     }
