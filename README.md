@@ -1,5 +1,4 @@
-Lakers + Clippers installation
-
+#Lakers
 This project back-end can be found at [Clippers](https://github.com/mirandaleandro/clippers.git)
 
 Getting Started
